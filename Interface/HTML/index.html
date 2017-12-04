@@ -55,6 +55,10 @@
 											<li><a onclick="languageSelect(this)">English</a></li>
 											<li><a onclick="languageSelect(this)">French</a></li>
 											<li><a onclick="languageSelect(this)">Chinese</a></li>
+											<li><a onclick="languageSelect(this)">Russian</a></li>
+											<li><a onclick="languageSelect(this)">Portugese</a></li>
+											<li><a onclick="languageSelect(this)">Japanese</a></li>
+											<li><a onclick="languageSelect(this)">Arabic</a></li>
 											<li class="divider"></li>
 											<li><a onclick="languageSelect(this)">Reset</a></li>
 										</ul>
@@ -70,6 +74,10 @@
 											<li><a onclick="providerSelect(this)">Coursera</a></li>
 											<li><a onclick="providerSelect(this)">EdX</a></li>
 											<li><a onclick="providerSelect(this)">Udacity</a></li>
+											<li><a onclick="providerSelect(this)">Future learn</a></li>
+											<li><a onclick="providerSelect(this)">Stanford</a></li>
+											<li><a onclick="providerSelect(this)">NPTEL</a></li>
+											<li><a onclick="providerSelect(this)">Gaucho</a></li>
 											<li class="divider"></li>
 											<li><a onclick="providerSelect(this)">Reset</a></li>
 										</ul>
@@ -83,12 +91,31 @@
 										</a>
 										<ul class="dropdown-menu">
 											<li><a onclick="instituteSelect(this)">Stanford</a></li>
-											<li><a onclick="instituteSelect(this)">MIT</a></li>
+											<li><a onclick="instituteSelect(this)">Massachusetts Institute of Technology</a></li>
 											<li><a onclick="instituteSelect(this)">University of Washington</a></li>
+											<li><a onclick="instituteSelect(this)">Georgia Institute of Technology</a></li>
+											<li><a onclick="instituteSelect(this)">University of Michigan</a></li>
+											<li><a onclick="instituteSelect(this)">University of California, Berkeley</a></li>
+											<li><a onclick="instituteSelect(this)">Google</a></li>
+											<li><a onclick="instituteSelect(this)">Microsoft</a></li>
 											<li class="divider"></li>
 											<li><a onclick="instituteSelect(this)">Reset</a></li>
 										</ul>
 										<label id = "instituteSelected"></label>
+									</div>
+
+									<div class="dropdown">
+										<a href="#" class="btn btn-simple dropdown-toggle" data-toggle="dropdown">
+									    	Pricing
+									    	<b class="caret"></b>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a onclick="pricingSelect(this)">Free</a></li>
+											<li><a onclick="pricingSelect(this)">Paid</a></li>
+											<li class="divider"></li>
+											<li><a onclick="pricingSelect(this)">Reset</a></li>
+										</ul>
+										<label id = "pricingSelected"></label>
 									</div>
 
 									<div class="checkbox">
@@ -101,13 +128,13 @@
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" name="optionsWorkload">
-											Workload less than 4 hours (per week)
+											Easy workload
 										</label>
 									</div>
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" name="optionsEnroll">
-											Available to enroll
+											Enroll now
 										</label>
 									</div>
 									<div class="checkbox">
@@ -119,7 +146,7 @@
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" name="optionsCheckboxes">
-											Rating above 4 on 5
+											Highly rated courses
 										</label>
 									</div>
 									<div class="checkbox">
@@ -191,6 +218,16 @@
 		    	label.innerHTML = option.text;
 		    }
 		}
+		function pricingSelect(option) {
+		    label = document.getElementById("pricingSelected");
+		    if (option.text == "Reset"){
+		    	label.innerHTML = '';
+		    }
+		    else {
+		    	label.innerHTML = option.text;
+		    }
+		}
+		
 	</script>
 
 </html>
