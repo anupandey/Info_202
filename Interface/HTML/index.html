@@ -41,7 +41,7 @@
 								<div class="header header-primary text-center">
 									<h4>Find a course that suits your needs</h4>
 									<div style="padding: 0px 70px 0px 70px ! important;">
-										<input class="form-control" placeholder="Search...">
+										<input id="searchInput" class="form-control" style="color: #ffffff; font-size: 1.3em; font-weight: 300;" placeholder="Search...">
 									</div>
 								</div>
 								<p class="text-divider">Refine your search</p>
@@ -120,44 +120,44 @@
 
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsDuration">
+											<input id="durationCheck" type="checkbox" name="optionsCheckboxes">
 											Short duration course (6 weeks or less)
 										</label>
 									</div>
 
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsWorkload">
+											<input id="workloadCheck" type="checkbox" name="optionsCheckboxes">
 											Easy workload
 										</label>
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsEnroll">
+											<input id="enrollCheck" type="checkbox" name="optionsCheckboxes">
 											Enroll now
 										</label>
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsCertification">
+											<input id="certificationCheck" type="checkbox" name="optionsCheckboxes">
 											With paid certification
 										</label>
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsCheckboxes">
+											<input id="ratingCheck" type="checkbox" name="optionsCheckboxes">
 											Highly rated courses
 										</label>
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" name="optionsCheckboxes">
+											<input id="pacingCheck" type="checkbox" name="optionsCheckboxes">
 											Self-paced course
 										</label>
 									</div>
 								</div>
 								<div class="footer text-center">
-									<a href="#pablo" class="btn btn-simple btn-primary btn-lg">Get Started</a>
+									<a onclick="submitSelect()" class="btn btn-simple btn-primary btn-lg">Get Started</a>
 								</div>
 							</form>
 						</div>
@@ -226,6 +226,23 @@
 		    else {
 		    	label.innerHTML = option.text;
 		    }
+		}
+		function submitSelect() {
+			// make an empty object
+			var query = {};
+
+			query.searchText = document.getElementById("searchInput").value;
+			query.language = document.getElementById("langSelected").innerHTML;
+			query.provider = document.getElementById("providerSelected").innerHTML;
+			query.institute = document.getElementById("instituteSelected").innerHTML;
+			query.pricing = document.getElementById("pricingSelected").innerHTML;
+			query.checkboxes = []
+
+			c = document.getElementsByName("optionsCheckboxes");
+			for(i=0; i < c.length; i++){
+				if(c[i].checked == true)
+					query.checkboxes.push(c[i].id);
+			}
 		}
 		
 	</script>
