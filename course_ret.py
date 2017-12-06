@@ -17,7 +17,6 @@ from nltk.corpus import stopwords
 courses= pd.read_csv("courses_list_final.csv")
 
 title_list= courses['Title'].tolist()
-print(title_list[:5])
 
 ps = PorterStemmer() #for stemming - taking care of mistakes etc.
 stopWords = set(stopwords.words('english')) #set of stop words 
@@ -119,34 +118,35 @@ def clean_json(search_results):
 
 
 if __name__ == "__main__":
-	print("Everything is going okay!")
-	inverted_index = makeInvertedIndex(title_list)
-	results_layer1 = {}
-	results_layer1 = search_input(inverted_index,'artificial intelligence')
-	filter_test = {}
-	list_test = []
-	for i in range(len(results_layer1)):
-		filter_test['Title'] = results_layer1[i]['Title']
-		filter_test['Subject'] = results_layer1[i]['Subject']
-		list_test.append(filter_test)
-	print(list_test)
-	json_str = clean_json(list_test)
-	print (json_str)
+    inverted_index = makeInvertedIndex(title_list)
+    
+    results_layer1 = search_input(inverted_index,'artificial intelligence')
+    #print(len(results_layer1))
 
-	#writing json data to file
-	text_file = open("data.js", "w")
-	text_file.write("var courses = ")
-	text_file.close()
-	with open('data.js', 'a') as outfile:
-		#json.dump(json_str, outfile)
-		outfile.write(list_test)
+    courses_str = "var courses = ["
+    for result in results_layer1:
+        courses_str += "{ Title: '" + result['Title'] + "' , Subject: '" + result['Subject'] + "' },"
+    courses_str = courses_str[:-1] + "]"    
+    #print(list_test)
 
-	#keys = ['Title', 'Subject']
-	#filter_test = {x:results_layer1[x] for x in keys}
-	#print(filter_test)
+    #json_str = clean_json(list_test)
+    #print (json_str)
 
+    #courses_json = json.dumps(courses_list)
+    print(courses_str)
 
+    #writing json data to file
+    text_file = open("courses.js", "w")
+    text_file.write(courses_str)
+    text_file.close()
+    #with open('data.js', 'a') as outfile:
+    	#json.dump(json_str, outfile)
+    	#outfile.write(list_test)
 
+    #keys = ['Title', 'Subject']
+    #filter_test = {x:results_layer1[x] for x in keys}
+    #print(filter_test)
 
 def combining_results(query):
-	print(query)
+	#print(query)
+    pass

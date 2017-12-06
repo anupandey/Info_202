@@ -30,7 +30,7 @@
 
 <body class="landing-page">
 
-	<script src="../products.js"></script>
+	<script src="../courses.js"></script>
 
 	<nav class="navbar navbar-transparent navbar-absolute">
     	<div class="container">
@@ -91,14 +91,12 @@
 	    $(document).ready(function() {
 	        $("#grid").kendoGrid({
 	            dataSource: {
-	                data: products,
+	                data: courses,
 	                schema: {
 	                    model: {
 	                        fields: {
-	                            ProductName: { type: "string" },
-	                            UnitPrice: { type: "number" },
-	                            UnitsInStock: { type: "number" },
-	                            Discontinued: { type: "boolean" }
+	                            Title: { type: "string" },
+	                            Subject: { type: "string" },
 	                        }
 	                    }
 	                },
@@ -113,10 +111,8 @@
 	                numeric: false
 	            },
 	            columns: [
-	                { field: "ProductName", title: "Course Name", width: "130px" },
-	                { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
-	                { field: "UnitsInStock", title: "Units In Stock", width: "130px" },
-	                { field: "Discontinued", width: "130px" }
+	                { field: "Title", title: "Course Title", width: "130px" },
+	                { field: "Subject", title: "Subject", width: "130px" }
 	            ]
 	        });
 	    });
