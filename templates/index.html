@@ -62,7 +62,7 @@
 											<li class="divider"></li>
 											<li><a onclick="languageSelect(this)">Reset</a></li>
 										</ul>
-										<label id = "langSelected"></label>
+										<label name ="langSelected" id = "langSelected"></label>
 									</div>
 
 									<div class="dropdown">
@@ -90,7 +90,7 @@
 									    	<b class="caret"></b>
 										</a>
 										<ul class="dropdown-menu">
-											<li><a onclick="instituteSelect(this)">Stanford</a></li>
+											<li><a onclick="instituteSelect(this)">Stanford University</a></li>
 											<li><a onclick="instituteSelect(this)">Massachusetts Institute of Technology</a></li>
 											<li><a onclick="instituteSelect(this)">University of Washington</a></li>
 											<li><a onclick="instituteSelect(this)">Georgia Institute of Technology</a></li>
@@ -128,7 +128,7 @@
 									<div class="checkbox">
 										<label>
 											<input id="workloadCheck" type="checkbox" name="optionsCheckboxes">
-											Easy workload
+											High workload
 										</label>
 									</div>
 									<div class="checkbox">
@@ -157,7 +157,7 @@
 									</div>
 								</div>
 								<div class="footer text-center">
-									<a onclick="submitSelect()" class="btn btn-simple btn-primary btn-lg">Get Started</a>
+									<a onclick="submitSelect()" class="btn btn-simple btn-primary btn-lg" action="/getstarted">Get Started</a>
 								</div>
 							</form>
 						</div>
@@ -236,6 +236,30 @@
 			query.provider = document.getElementById("providerSelected").innerHTML;
 			query.institute = document.getElementById("instituteSelected").innerHTML;
 			query.pricing = document.getElementById("pricingSelected").innerHTML;
+			if (document.getElementById("pacingCheck").checked == true) {
+				query.pacing = true;
+			}
+			if (document.getElementById("durationCheck").checked == true) {
+				query.shortduration = true;
+			}
+			if (document.getElementById("workloadCheck").checked == true) {
+				query.easy = true;
+			}
+			if (document.getElementById("enrollCheck").checked == true) {
+				query.enrollnow = true;
+			}
+			if (document.getElementById("certificationCheck").checked == true) {
+				query.paid = true;
+			}
+			if (document.getElementById("ratingCheck").checked == true) {
+				query.rating = true;
+			}
+			//query.pacing = document.getElementById("pacingCheck").innerHTML;
+			//query.shortduration = document.getElementById("durationCheck").innerHTML;
+			//query.easy = document.getElementById("workloadCheck").innerHTML;
+			//query.enrollnow = document.getElementById("enrollCheck").innerHTML;
+			//query.paidcert = document.getElementById("certificationCheck").innerHTML;
+			//query.rating = document.getElementById("ratingCheck").innerHTML;
 			query.checkboxes = []
 
 			c = document.getElementsByName("optionsCheckboxes");
@@ -243,6 +267,24 @@
 				if(c[i].checked == true)
 					query.checkboxes.push(c[i].id);
 			}
+
+			// req.open('POST', '/ajax')
+   //      	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+   //      	var postVars = query
+   //      	req.send(postVars)
+
+   			$.ajax({
+   				url: '/ajax',
+   				method: "POST",
+   				data: query,
+   				success: function(data) {
+   					console.log('success')
+   					console.log(data)
+   				}
+
+
+   			})
+
 		}
 		
 	</script>
