@@ -185,6 +185,20 @@ def filter_result_by_selfpace(search_results):
             filtered_search_results.append(search_result)
     return filtered_search_results
 
+def filter_result_by_pricing(search_results, pricing):
+    filtered_search_results = []
+    if pricing == 'Free':
+        for search_result in search_results:
+            if search_result['f:Free']:
+                filtered_search_results.append(search_result)
+    else:
+        for search_result in search_results:
+            if not search_result['f:Free']:
+                filtered_search_results.append(search_result)
+    return filtered_search_results
+
+
+
 
 def combining_results(query):
 
@@ -218,15 +232,13 @@ def combining_results(query):
         print("Search is empty!")
 
     print("This is layer one : \n")
-    print (len(results_layer1))
-
+    #print (len(results_layer1))
 
     if language !="":
         results_layer2 = filter_result_by_language(results_layer1,language)
     else:
         results_layer2 = results_layer1
-    print (len(results_layer2))
-
+    
 
     if provider !="":
         results_layer3 = filter_result_by_institute(results_layer2,provider)
@@ -234,17 +246,22 @@ def combining_results(query):
         results_layer3 = results_layer2
 
 
-    #if pricing !="":
-        #results_layer4 = filter_result_by_free_courses(search_results)
-    #else:
-        #results_layer4 = results_layer3
-    #print (len(results_layer3))
+    if pricing != "":
+        results_layer4 = filter_result_by_pricing(results_layer3, pricing)
+    else:
+        results_layer4 = results_layer3
+
+
+    if institute !="":
+        results_layer5 = filter_result_by_institute(results_layer4,institute)
+    else:
+        results_layer5 = results_layer4
 
     for key,value in query.items():
         print("kay" + key)
         print("values" + value)
 
-    search_results = results_layer3
+    search_results = results_layer5
 
     for key,value in query.items():
         if(key == "shortduration"):
