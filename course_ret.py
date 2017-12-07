@@ -125,27 +125,16 @@ if __name__ == "__main__":
 
     courses_str = "var courses = ["
     for result in results_layer1:
-        courses_str += "{ Title: '" + result['Title'] + "' , Subject: '" + result['Subject'] + "' },"
+        courses_str += "{ Title: '" + result['Title'] 
+        + "' , Subject: '" + result['Subject'] + "' }"
+        + ","
     courses_str = courses_str[:-1] + "]"    
-    #print(list_test)
-
-    #json_str = clean_json(list_test)
-    #print (json_str)
-
-    #courses_json = json.dumps(courses_list)
-    print(courses_str)
+    #print(courses_str)
 
     #writing json data to file
     text_file = open("courses.js", "w")
     text_file.write(courses_str)
     text_file.close()
-    #with open('data.js', 'a') as outfile:
-    	#json.dump(json_str, outfile)
-    	#outfile.write(list_test)
-
-    #keys = ['Title', 'Subject']
-    #filter_test = {x:results_layer1[x] for x in keys}
-    #print(filter_test)
 
 def combining_results(query):
 	#print(query)
