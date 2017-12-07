@@ -3,19 +3,17 @@ import pandas as pd
 import nltk
 import matplotlib.pyplot as plt
 from sklearn import feature_extraction
-
 from nltk import NaiveBayesClassifier
 from nltk.tokenize import word_tokenize
 from itertools import chain
 from sklearn.feature_extraction.text import CountVectorizer
-
 from sklearn.model_selection import train_test_split
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
 courses= pd.read_csv("courses_list_final.csv")
-
 title_list= courses['Title'].tolist()
 
 ps = PorterStemmer() #for stemming - taking care of mistakes etc.
@@ -36,9 +34,6 @@ def makeInvertedIndex(strlist):
             
     return inverted_index
 
-#inverted_index = makeInvertedIndex(title_list)
-
-
 def orSearch(invertedIndex, query):
     result_set= set()
     for item in query:
@@ -48,11 +43,6 @@ def orSearch(invertedIndex, query):
             result_set = result_set.union(doc_set)
         
     return result_set
-
-#orSearch(inverted_index, ['machine', 'structure'])
-
-
-
 
 def andSearch(invertedIndex, query):
     result_set= set()
@@ -69,12 +59,6 @@ def andSearch(invertedIndex, query):
             result_set = result_set.intersection(doc_set)
         
     return result_set
-
-
-#andSearch(inverted_index, ['machine', 'structure'])
-
-
-
 
 def search_input(inverted_index, query):
     words = word_tokenize(query)
@@ -94,8 +78,7 @@ def search_input(inverted_index, query):
                 course_converted_dict[key] = value
         search_results.append(course_converted_dict)
     #right now- our results is dispalyed in a manner that lists 'and' queries first followed by "or" queries 
-    #this is useful for presenting ranked response
-        
+    #this is useful for presenting ranked response    
     return search_results
 
 
@@ -268,7 +251,7 @@ def combining_results(query):
     courses_str = "var courses = ["
 
     for result in results_layer1:
-        courses_str += "{ Title: '" + result['Title'] + "' , Subject: '" + result['Subject'] + "' },"
+        courses_str += "{ Title: '" + result['Title'] + "' , URL: '" + result['URL'] + "' , Subject: '" + result['Subject'] + "' , Provider: '" + result['Provider'] + "' },"
     courses_str = courses_str[:-1] + "]"    
 
     #print(courses_str)
@@ -277,3 +260,24 @@ def combining_results(query):
     text_file = open("static/js/courses.js", "w")
     text_file.write(courses_str)
     text_file.close()
+
+def cosine_similarity_description(doc_id=0, total_ranks=5):
+    tfidf = TfidfVectorizer().fit_transform(courses['Description'].values.astype('U'))
+    cosine_similarities = cosine_similarity(tfidf[doc_id], tfidf).flatten()
+    
+    total_ranks = int(0 - total_ranks - 1)
+    most_similar_courses = cosine_similarities.argsort()[:total_ranks:-1]
+
+    search_results=[]
+    for id in most_similar_courses:
+        course_info = courses.loc[id]
+        course_dict = course_info.to_dict()
+        course_converted_dict = {}
+        for key, value in course_dict.items():
+            try:
+                course_converted_dict[key] = np.asscalar(value)
+            except AttributeError:
+                course_converted_dict[key] = value
+        search_results.append(course_converted_dict)
+
+    return search_results

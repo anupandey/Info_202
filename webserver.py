@@ -16,9 +16,7 @@ def index():
 def showData():
     result = request.form['query']
     query = json.loads(result)
-    print(query)
     pt.combining_results(query)
-    time.sleep(3)  
     return render_template('result.html', title = "Kaush")
 
 if __name__ == "__main__":

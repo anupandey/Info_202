@@ -45,7 +45,9 @@
                 <div class="row">
 					<div class="col-md-6">
 						<h1 class="title">Here are your personalized results.</h1>
-	                    <h4>You can find the courses ordered with respect to your search query.</h4>
+	                    <h4>You can find the courses below ranked in the order of relevance of title. If you have applied filters, the courses will be returned after filtering out the results. 
+
+	                    In case no data is shown below, it means that there is no course currently available that matches your request.</h4>
 					</div>
                 </div>
             </div>
@@ -53,7 +55,10 @@
 		<div class="main main-raised">
             <div class="container" style="padding: 30px">
                 <div class="row">
-	            	<div id="grid"></div>
+                	<form method="POST" action="/search">
+		            	<div id="grid"></div>
+		            	<button class="btn btn-primary" onclick="submitClick()">
+		            </form>
 				</div>
 			</div>
 		</div>
@@ -87,6 +92,15 @@
 
 	<script src="../static/js/courses.js" type="text/javascript"></script>
 	<script>
+		function onChange(arg) {
+	        var selected = $.map(this.select(), function(item) {
+	            return $(item).text();
+	        });
+
+	        //("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+	        $("#similarcourses_grid").data("kendoGrid").dataSource.read();
+	    }
+
 	    $(document).ready(function() {
 	        $("#grid").kendoGrid({
 	            dataSource: {
@@ -96,12 +110,17 @@
 	                        fields: {
 	                            Title: { type: "string" },
 	                            Subject: { type: "string" },
+	                            URL: { type: "string" },
+	                            Provider: {type: "string"}
 	                        }
 	                    }
 	                },
 	                pageSize: 20
 	            },
 	            height: 550,
+	            selectable: true,
+	            change: onChange,
+	            persistSelection: true,
 	            scrollable: true,
 	            sortable: true,
 	            filterable: true,
@@ -111,10 +130,17 @@
 	            },
 	            columns: [
 	                { field: "Title", title: "Course Title", width: "130px" },
-	                { field: "Subject", title: "Subject", width: "130px" }
+	                { field: "Subject", title: "Subject", width: "130px" },
+	                { field: "Provider", title: "Provider", width: "50px"},
+	                { field: "URL", title: "URL", width: "50px"}
 	            ]
 	        });
 	    });
+	</script>
+	<script type="text/javascript">
+		function submitClick(){
+
+		}
 	</script>
 
 </html>
