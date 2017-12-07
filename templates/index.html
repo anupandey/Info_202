@@ -37,7 +37,7 @@
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
 						<div class="card card-signup">
-							<form class="form" method="post" action="/search">
+							<form class="form" method="POST" action="/" id="search_form">
 								<div class="header header-primary text-center">
 									<h4>Find a course that suits your needs</h4>
 									<div style="padding: 0px 70px 0px 70px ! important;">
@@ -157,8 +157,9 @@
 									</div>
 								</div>
 								<div class="footer text-center">
-									<a onclick="submitSelect()" class="btn btn-simple btn-primary btn-lg" action="/getstarted">Get Started</a>
+									<a onclick="submitSelect()" class="btn btn-simple btn-primary btn-lg">Get Started</a>
 								</div>
+								<input type="hidden" name="query" id="queryData">
 							</form>
 						</div>
 					</div>
@@ -228,6 +229,7 @@
 		    }
 		}
 		function submitSelect() {
+
 			// make an empty object
 			var query = {};
 
@@ -254,12 +256,12 @@
 			if (document.getElementById("ratingCheck").checked == true) {
 				query.rating = true;
 			}
-			//query.pacing = document.getElementById("pacingCheck").innerHTML;
-			//query.shortduration = document.getElementById("durationCheck").innerHTML;
-			//query.easy = document.getElementById("workloadCheck").innerHTML;
-			//query.enrollnow = document.getElementById("enrollCheck").innerHTML;
-			//query.paidcert = document.getElementById("certificationCheck").innerHTML;
-			//query.rating = document.getElementById("ratingCheck").innerHTML;
+			//query.pacing = document.getElementById("pacingCheck").checked;
+			//query.shortduration = document.getElementById("durationCheck").checked;
+			//query.easy = document.getElementById("workloadCheck").checked;
+			//query.enrollnow = document.getElementById("enrollCheck").checked;
+			//query.paidcert = document.getElementById("certificationCheck").checked;
+			//query.rating = document.getElementById("ratingCheck").checked;
 			query.checkboxes = []
 
 			c = document.getElementsByName("optionsCheckboxes");
@@ -268,23 +270,11 @@
 					query.checkboxes.push(c[i].id);
 			}
 
-			// req.open('POST', '/ajax')
-   //      	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-   //      	var postVars = query
-   //      	req.send(postVars)
+			query_field = document.getElementById("queryData");
+			query_field.value = JSON.stringify(query);
 
-   			$.ajax({
-   				url: '/ajax',
-   				method: "POST",
-   				data: query,
-   				success: function(data) {
-   					console.log('success')
-   					console.log(data)
-   				}
-
-
-   			})
-
+			form = document.getElementById("search_form");
+			form.submit();
 		}
 		
 	</script>

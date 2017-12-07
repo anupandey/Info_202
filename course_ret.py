@@ -204,64 +204,50 @@ def combining_results(query):
 
     #obtaining search criteria
     searchText = query['searchText']
-    print(searchText)
-
+    #print(searchText)
     language = query['language']
-    print(language)
-
+    #print(language)
     provider = query['provider']
-    print(provider)
-
+    #print(provider)
     institute = query['institute']
-    print(institute)
-
+    #print(institute)
     pricing = query['pricing']
-    print(pricing)
-
-    
-
-    #print(query.items())
-    #value = query['checkboxes[]']
-    #print(value)
+    #print(pricing)
 
 
     inverted_index = makeInvertedIndex(title_list)
+
     if searchText != "":
         results_layer1 = search_input(inverted_index,searchText)
     else:
         print("Search is empty!")
 
     print("This is layer one : \n")
-    #print (len(results_layer1))
+    print (len(results_layer1))
 
-    if language !="":
+    if language != "":
         results_layer2 = filter_result_by_language(results_layer1,language)
     else:
         results_layer2 = results_layer1
     
-
-    if provider !="":
+    if provider != "":
         results_layer3 = filter_result_by_institute(results_layer2,provider)
     else:
         results_layer3 = results_layer2
-
 
     if pricing != "":
         results_layer4 = filter_result_by_pricing(results_layer3, pricing)
     else:
         results_layer4 = results_layer3
 
-
-    if institute !="":
+    if institute != "":
         results_layer5 = filter_result_by_institute(results_layer4,institute)
     else:
         results_layer5 = results_layer4
 
-    for key,value in query.items():
-        print("kay" + key)
-        print("values" + value)
-
     search_results = results_layer5
+
+    print(query.items())
 
     for key,value in query.items():
         if(key == "shortduration"):
@@ -277,23 +263,17 @@ def combining_results(query):
         if(key == "pacing"):
             search_results = filter_result_by_selfpace(search_results)
 
-    print(len(search_results))
+    print("Final layer", len(search_results))
 
     courses_str = "var courses = ["
 
     for result in results_layer1:
-        courses_str += "{ Title: '" + result['Title'] 
-        + "' , Subject: '" + result['Subject'] + "' }"
-        + ","
+        courses_str += "{ Title: '" + result['Title'] + "' , Subject: '" + result['Subject'] + "' },"
     courses_str = courses_str[:-1] + "]"    
 
     #print(courses_str)
 
     #writing json data to file
-    text_file = open("courses.js", "w")
+    text_file = open("static/js/courses.js", "w")
     text_file.write(courses_str)
     text_file.close()
-
-def combining_results(query):
-	#print(query)
-    pass
