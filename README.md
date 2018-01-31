@@ -1,5 +1,5 @@
 # Info_202
-Project for INFO 202
+
 Our project, Chalk Street aggregates a set of courses available for topics such as computer science, machine learning, natural language processing and related topics and presents a method for our users to retrieve these courses based on metrics that we believe would help our users to  search and find courses that better match with their need and capability and thus support them in making an appropriate course selection.
 
 Description of our Resource:
